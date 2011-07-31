@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>jqCombobox example</title>
+  <!-- Include latest jQuery -->
+  <script type="text/javascript" src="../lib/jquery-1.6.2.js"></script>
+  <script type="text/javascript" src="../lib/jquery.ui.position-1.8.14.js"></script>
+  <script type="text/javascript" src="../lib/jquery.jqext.js"></script>
+
+  <!-- Include plugin code testing framework -->
+  <link rel="Stylesheet" media="screen" href="../dist/css/jquery.combobox.css"/>
+  <script type="text/javascript" src="../src/combobox.js"></script>
+  <script type="text/javascript" src="../src/single_selection_model.js"></script>
+
+  <!-- Include project source files -->
+  <!-- Include unit test files -->
+  <script type="text/javascript">
+
+    $(document).ready(function(){
+
+      $('div.panel.c1 div.combobox, div.panel.c101 div.combobox').combobox({empty: false, items: [{text: "alex"}, {text: 'guy', value: 'shumely'}, {text: 'Paul'}], events: {change:
+        function(){
+          var panel = this.el.closest('div.panel');
+          $('span.selectedValue span.index', panel).html(this.selectedIndex());
+          $('span.selectedValue span.value', panel).html(this.selectedValue());
+        }
+      }});
+
+      $('div.panel.c2 div.combobox, div.panel.c102 div.combobox').combobox({items: [{text: "alex"}, {text: 'guy', value: 'shumely'}, {text: 'Paul'}], events: {change:
+        function(){
+          var panel = this.el.closest('div.panel');
+          $('span.selectedValue span.index', panel).html(this.selectedIndex());
+          $('span.selectedValue span.value', panel).html(this.selectedValue());
+        }
+      }});
+
+      $('div.panel.c3 div.combobox, div.panel.c103 div.combobox').combobox({items: [{text: "alex"}, {text: 'guy', value: 'shumely'}, {text: 'Paul'}], events: {change:
+        function(){
+          var panel = this.el.closest('div.panel');
+          $('span.selectedValue span.index', panel).html(this.selectedIndex());
+          $('span.selectedValue span.value', panel).html(this.selectedValue());
+        }
+      }});
+
+      $('a.focusable').focus(function(){ console.info('on focus'); });
+    });
+
+  </script>
+
+  <style type="text/css">
+    div.panel{
+      border: 1px solid #aaa;
+      padding: 20px;
+      margin: 20px;
+    }
+
+    div.panel.c3 div.combobox-container{
+      height: 40px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>jqCombobox examples</h1>
+
+<div class="panel">
+
+</div>
+
+<div class="panel c1">
+  <div class="controls">
+    empty: false, items: [{text: "alex"}, {text: 'guy', value: 'shumely'}, {text: 'Paul'}]
+  </div>
+  <div>
+    <span>Last name: </span>
+    <input name="lastname" type="text"/>
+    <span>First name: </span>
+    <div class='combobox'></div>
+    <span class="selectedValue">
+      <span>Selected index: </span>
+      <span class="index"></span>
+      <span>Selected value: </span>
+      <span class="value"></span>
+    </span>
+  </div>
+</div>
+
+<div class="panel c2">
+  <div class="controls">
+    empty: true, items: [{text: "alex"}, {text: 'guy', value: 'shumely'}, {text: 'Paul'}]
+  </div>
+  <div>
+    <span>Last name: </span>
+    <input name="lastname" type="text"/>
+    <span>First name: </span>
+    <div class='combobox'></div>
+    <span class="selectedValue">
+      <span>Selected index: </span>
+      <span class="index"></span>
+      <span>Selected value: </span>
+      <span class="value"></span>
+    </span>
+  </div>
+</div>
+
+<div class="panel c3">
+  <div class="controls">
+    empty: true, items: [{text: "alex"}, {text: 'guy', value: 'shumely'}, {text: 'Paul'}]
+  </div>
+  <div>
+    <span>Last name: </span>
+    <input name="lastname" type="text"/>
+    <span>First name: </span>
+    <div class='combobox'></div>
+    <span class="selectedValue">
+      <span>Selected index: </span>
+      <span class="index"></span>
+      <span>Selected value: </span>
+      <span class="value"></span>
+    </span>
+  </div>
+</div>
+
+<div style="direction: rtl;">
+  <h3>RTL</h3>
+  <div class="panel c101">
+    <div class="controls">
+      empty: false, items: [{text: "alex"}, {text: 'guy', value: 'shumely'}, {text: 'Paul'}]
+    </div>
+    <div>
+      <span>Last name: </span>
+      <input name="lastname" type="text"/>
+      <span>First name: </span>
+      <div class='combobox'></div>
+      <span class="selectedValue">
+        <span>Selected index: </span>
+        <span class="index"></span>
+        <span>Selected value: </span>
+        <span class="value"></span>
+      </span>
+    </div>
+  </div>
+
+  <div class="panel c102">
+    <div class="controls">
+      empty: true, items: [{text: "alex"}, {text: 'guy', value: 'shumely'}, {text: 'Paul'}]
+    </div>
+    <div>
+      <span>Last name: </span>
+      <input name="lastname" type="text"/>
+      <span>First name: </span>
+      <div class='combobox'></div>
+      <span class="selectedValue">
+        <span>Selected index: </span>
+        <span class="index"></span>
+        <span>Selected value: </span>
+        <span class="value"></span>
+      </span>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

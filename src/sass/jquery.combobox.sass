@@ -1,0 +1,51 @@
+@mixin round($radius)
+  -webkit-border-radius: #{$radius}
+  -moz-border-radius: #{$radius}
+  border-radius: #{$radius}
+
+@mixin shadow($shadow)
+  -webkit-box-shadow: $shadow
+  -moz-box-shadow: $shadow
+
+div.combobox-container
+  font-size: 13px
+  font-family: Arial, Helvetica, serif
+  height: 28px
+  width: 180px
+  border: 1px solid #aaa
+  //position: relative
+  display: inline-block
+
+  background-color: white
+
+  div.value
+    cursor: pointer
+    padding: 0px 5px
+    background: transparent url(images/down-15x8.gif) no-repeat right center
+
+  div.popup
+    position: absolute
+    background-color: #efefef
+    border: 1px solid #aaa
+    z-index: 1099
+
+    ul.items
+      margin: 0px
+      padding: 0px
+      li.item
+        cursor: pointer
+        list-style: none
+        margin: 0px
+        padding: 3px 5px
+        &.selected
+          background-color: #2a5f93
+          color: white
+          &:hover
+            //background-color: #4b6e91
+        &:hover
+          background-color: #4183C4
+          color: white
+
+  &.rtl
+    div.value
+      background-position: left center

@@ -1,0 +1,33 @@
+div.combobox-container {
+  font-size: 13px;
+  font-family: Arial, Helvetica, serif;
+  height: 28px;
+  width: 180px;
+  border: 1px solid #aaaaaa;
+  display: inline-block;
+  background-color: white; }
+  div.combobox-container div.value {
+    cursor: pointer;
+    padding: 0px 5px;
+    background: transparent url(images/down-15x8.gif) no-repeat right center; }
+  div.combobox-container div.popup {
+    position: absolute;
+    background-color: #efefef;
+    border: 1px solid #aaaaaa;
+    z-index: 1099; }
+    div.combobox-container div.popup ul.items {
+      margin: 0px;
+      padding: 0px; }
+      div.combobox-container div.popup ul.items li.item {
+        cursor: pointer;
+        list-style: none;
+        margin: 0px;
+        padding: 3px 5px; }
+        div.combobox-container div.popup ul.items li.item.selected {
+          background-color: #2a5f93;
+          color: white; }
+        div.combobox-container div.popup ul.items li.item:hover {
+          background-color: #4183c4;
+          color: white; }
+  div.combobox-container.rtl div.value {
+    background-position: left center; }

@@ -19,6 +19,8 @@ div.combobox-container
   background-color: white
 
   div.value
+    -webkit-user-select: none
+    -moz-user-select: none
     cursor: pointer
     padding: 0px 5px
     background: transparent url(images/down-15x8.gif) no-repeat right center
@@ -33,6 +35,8 @@ div.combobox-container
       margin: 0px
       padding: 0px
       li.item
+        -webkit-user-select: none
+        -moz-user-select: none
         cursor: pointer
         list-style: none
         margin: 0px
@@ -46,6 +50,34 @@ div.combobox-container
           background-color: #4183C4
           color: white
 
+  &.multi
+    div.value
+      overflow: hidden
+    div.popup
+      ul.items
+        li.item
+          div.icon
+            background: transparent url(images/unchecked-19x20.png) no-repeat center center
+            width: 20px
+            height: 20px
+            float: left
+            margin-right: 5px
+          div.text
+            height: 20px
+          &.selected
+            div.icon
+              background-image: url(images/checked-19x20.png)
+
+
   &.rtl
     div.value
       background-position: left center
+
+    &.multi
+      div.popup
+        ul.items
+          li.item
+            div.icon
+              float: right
+              margin-left: 5px
+              margin-right: 0px

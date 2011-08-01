@@ -34,8 +34,11 @@
     <echo message="Building single js file: ${distFilePath}.js"/>
     <concat destfile="${distFilePath}.js">
       <fileset file="${licenseFile}"/>
+      <fileset dir="${srcDir}" includes="base.js"/>
       <fileset dir="${srcDir}" includes="combobox.js"/>
       <fileset dir="${srcDir}" includes="single_selection_model.js"/>
+      <fileset dir="${srcDir}" includes="multiple_combobox.js"/>
+      <fileset dir="${srcDir}" includes="multiple_selection_model.js"/>
     </concat>
   </target>
 

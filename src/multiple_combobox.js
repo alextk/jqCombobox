@@ -3,47 +3,45 @@
   /**
    * Progress bar class api
    */
-  var ComboboxClass = function() {
+  var MultipleComboboxClass = function() {
     this.initialize.apply(this, arguments);
   };
 
-  $.extend(ComboboxClass.prototype, {
+  $.extend(MultipleComboboxClass.prototype, {
 
     initialize: function(target, options) {
       this.target = target;
       this.options = options;
 
-      this.selectionModel = new $.fn.combobox.classes.SingleSelectionModel();
+      this.selectionModel = new $.fn.combobox.classes.MultipleSelectionModel();
 
       this.items = options.items.collect(function(item){
         var text = $.isUndefined(item.text) ? item.value : item.text;
         var value = $.isUndefined(item.value) ? item.text : item.value;
         return {text: text, value: value};
       });
-      if(options.empty) this.items.unshift(options.emptyItem);
 
       this.el = this._createUI(target, options);
       this._bindListeners();
       this.renderItems();
 
       //find selected item index
-      var selectedIndex = -1;
-      if(!$.isUndefined(options.selectedValue)) {
-        selectedIndex = this.items.findIndex(function(item){ return item.value == options.selectedValue; });
+      var selectedIndices = [];
+      if(!$.isUndefined(options.selectedValues)) {
+        selectedIndices = this.items.select(function(item){ return options.selectedValues.include(item.value); }).collect(function(item, index){ return index; });
       }
-      if(selectedIndex == -1) selectedIndex = 0;
-      this.selectionModel.index(selectedIndex);
+      this.selectionModel.indices(selectedIndices);
     },
 
-    selectedIndex: function(newIndex){
-      if(arguments.length == 0) return this.selectionModel.index();
-      this.selectionModel.index(newIndex);
-      return this;
+    selectedIndices: function(newIndices){
+      if(arguments.length == 0) return this.selectionModel.indices(); //getter
+
+      this.selectionModel.indices(newIndices);
     },
 
-    selectedValue: function(){
-      var index = this.selectedIndex();
-      if(index >=0) return this.items[index].value;
+    selectedValues: function(){
+      var indices = this.selectedIndices();
+      return indices.collect(function(index){ return this.items[index].value; }, this);
     },
 
     togglePopup: function(show){
@@ -71,7 +69,7 @@
       var ul = $('<ul class="items"/>');
 
       var itemRenderer = function(item){
-        return $('<li class="item"/>').html(item.text);
+        return $('<li class="item"/>').append('<div class="icon"></span>', $('<div class="text">').html(item.text));
       };
 
       this.items.each(function(item){
@@ -97,25 +95,24 @@
       var itemIndex = li.index();
       if(itemIndex == -1) return;
 
-      this.selectionModel.index(itemIndex);
-      this.hidePopup();
+      this.selectionModel.toggleIndex(itemIndex);
     },
 
     _onSelectionChanged: function(event, data){
       $('.popup li.item', this.el).removeClass('selected');
-      $('input[type=hidden]', this.el).val('');
-      $('.value', this.el).html('&nbsp;');
 
-      var index = this.selectionModel.index();
-      if(index >= 0){
+      var indices = this.selectionModel.indices();
+      indices.each(function(index){
         var item = this.items[index];
-        //update value
-        $('.value', this.el).html(item.text);
-        $('input[type=hidden]', this.el).val(item.value);
-        //toggle selection in popup
-        $('.popup li.item', this.el).eq(index).addClass('selected');
-      }
-      this._invokeCallback('change', {source: this, oldIndex: data.oldIndex, newIndex: data.newIndex});
+        $('.popup li.item', this.el).eq(index).addClass('selected'); //add selection in popup
+      }, this);
+
+      //update selected values
+      var selectedItems = indices.collect(function(index){ return this.items[index]; }, this);
+      $('.value', this.el).html(selectedItems.length == 0 ? this.options.emptyText : selectedItems.property('text').join(', '));
+      $('input[type=hidden]', this.el).val(selectedItems.property('value').join(', '));
+
+      this._invokeCallback('change', {source: this});
     },
 
     _createUI: function(target, options) {
@@ -151,11 +148,10 @@
 
   });
 
-  ComboboxClass.defaults = {
-    empty: true,
-    emptyItem: {text: 'Please select value', value: null},
+  MultipleComboboxClass.defaults = {
+    emptyText: 'Please select values'
   };
 
-  $.fn.combobox.classes.Combobox = ComboboxClass;
+  $.fn.combobox.classes.MultipleCombobox = MultipleComboboxClass;
 
 })(jQuery);

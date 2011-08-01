@@ -11,8 +11,11 @@
 
   <!-- Include plugin code testing framework -->
   <link rel="Stylesheet" media="screen" href="../dist/css/jquery.combobox.css"/>
+  <script type="text/javascript" src="../src/base.js"></script>
   <script type="text/javascript" src="../src/combobox.js"></script>
   <script type="text/javascript" src="../src/single_selection_model.js"></script>
+  <script type="text/javascript" src="../src/multiple_combobox.js"></script>
+  <script type="text/javascript" src="../src/multiple_selection_model.js"></script>
 
   <!-- Include project source files -->
   <!-- Include unit test files -->
@@ -20,7 +23,7 @@
 
     $(document).ready(function(){
 
-      $('div.panel.c1 div.combobox, div.panel.c101 div.combobox').combobox({empty: false, items: [{text: "alex"}, {text: 'guy', value: 'shumely'}, {text: 'Paul'}], events: {change:
+      $('div.panel.c1 span.combobox, div.panel.c101 span.combobox').combobox({empty: false, items: [{text: "alex"}, {text: 'guy', value: 'shumely'}, {text: 'Paul'}], events: {change:
         function(){
           var panel = this.el.closest('div.panel');
           $('span.selectedValue span.index', panel).html(this.selectedIndex());
@@ -28,7 +31,7 @@
         }
       }});
 
-      $('div.panel.c2 div.combobox, div.panel.c102 div.combobox').combobox({items: [{text: "alex"}, {text: 'guy', value: 'shumely'}, {text: 'Paul'}], events: {change:
+      $('div.panel.c2 span.combobox, div.panel.c102 span.combobox').combobox({items: [{text: "alex"}, {text: 'guy', value: 'shumely'}, {text: 'Paul'}], events: {change:
         function(){
           var panel = this.el.closest('div.panel');
           $('span.selectedValue span.index', panel).html(this.selectedIndex());
@@ -36,15 +39,55 @@
         }
       }});
 
-      $('div.panel.c3 div.combobox, div.panel.c103 div.combobox').combobox({items: [{text: "alex"}, {text: 'guy', value: 'shumely'}, {text: 'Paul'}], events: {change:
+      $('div.panel.c3 span.combobox, div.panel.c103 span.combobox').combobox({items: [{text: "alex"}, {text: 'guy', value: 'shumely'}, {text: 'Paul'}], events: {change:
         function(){
           var panel = this.el.closest('div.panel');
           $('span.selectedValue span.index', panel).html(this.selectedIndex());
           $('span.selectedValue span.value', panel).html(this.selectedValue());
         }
       }});
+
+      $('div.panel.c3 select.indexSelector').change(function(){
+        //if(this.selectedIndex == 0) return;
+        var $this = $(this);
+        var index = $this.val();
+        $('div.panel.c3 span.combobox').combobox('api').selectedIndex(index);
+      });
+
+      $('div.panel.c4, div.panel.c104').each(function(){
+        var $this = $(this);
+        //init controls
+        $('div.controls a.create', $this).click(function(){
+          $('span.combobox', $this).combobox({
+            items: ['Alex', 'Guy', 'Jacob', 'Paul', 'Elina', 'Daniel', 'Roman'].collect(function(name){ return {text: name}; }),
+            events: {change:
+              function(){
+                var panel = this.el.closest('div.panel');
+                $('span.onchange', panel).html("index: {0}, value: {1}".format(this.selectedIndex(), this.selectedValue()));
+              }
+          }});
+        });
+
+        $('div.controls a.destroy', $this).click(function(){
+          $('span.combobox', $this).combobox('destroy');
+        });
+      });
+
+      $('div.panel.m1, div.panel.m101').each(function(){
+        var $this = $(this);
+        $('span.combobox', $this).combobox({
+          type: 'multi',
+          items: ['Alex', 'Guy', 'Jacob', 'Paul', 'Elina', 'Daniel', 'Roman'].collect(function(name){ return {text: name}; }),
+          events: {change:
+            function(){
+              var panel = this.el.closest('div.panel');
+              $('span.onchange', panel).html("index: {0} | values: {1}".format(this.selectedIndices().join(', '), this.selectedValues().join(', ')));
+            }
+        }});
+      });
 
       $('a.focusable').focus(function(){ console.info('on focus'); });
+
     });
 
   </script>
@@ -65,9 +108,8 @@
 
 <h1>jqCombobox examples</h1>
 
-<div class="panel">
-
-</div>
+<h2>Single combobox</h2>
+<hr/>
 
 <div class="panel c1">
   <div class="controls">
@@ -77,7 +119,7 @@
     <span>Last name: </span>
     <input name="lastname" type="text"/>
     <span>First name: </span>
-    <div class='combobox'></div>
+    <span class='combobox'></span>
     <span class="selectedValue">
       <span>Selected index: </span>
       <span class="index"></span>
@@ -95,7 +137,7 @@
     <span>Last name: </span>
     <input name="lastname" type="text"/>
     <span>First name: </span>
-    <div class='combobox'></div>
+    <span class='combobox'></span>
     <span class="selectedValue">
       <span>Selected index: </span>
       <span class="index"></span>
@@ -107,19 +149,42 @@
 
 <div class="panel c3">
   <div class="controls">
-    empty: true, items: [{text: "alex"}, {text: 'guy', value: 'shumely'}, {text: 'Paul'}]
+    height: 40px from CSS. {empty: true, items: [{text: "alex"}, {text: 'guy', value: 'shumely'}, {text: 'Paul'}]}
   </div>
   <div>
     <span>Last name: </span>
     <input name="lastname" type="text"/>
     <span>First name: </span>
-    <div class='combobox'></div>
+    <span class='combobox'></span>
     <span class="selectedValue">
       <span>Selected index: </span>
       <span class="index"></span>
       <span>Selected value: </span>
       <span class="value"></span>
     </span>
+    <span>
+      <span>Change selected index:</span>
+      <select class="indexSelector">
+        <option value="-1">Select index to change selection in jqCombobobx</option>
+        <option>0</option>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+      </select>
+    </span>
+  </div>
+</div>
+
+<div class="panel c4">
+  <div class="controls">
+    <a href="javascript:;" class="create">Create</a>
+    |
+    <a href="javascript:;" class="destroy">Destroy</a>
+  </div>
+  <div>
+    <span>Combobox of names: </span>
+    <span class='combobox'></span>
+    <span class='onchange'></span>
   </div>
 </div>
 
@@ -133,7 +198,7 @@
       <span>Last name: </span>
       <input name="lastname" type="text"/>
       <span>First name: </span>
-      <div class='combobox'></div>
+      <span class='combobox'></span>
       <span class="selectedValue">
         <span>Selected index: </span>
         <span class="index"></span>
@@ -151,7 +216,7 @@
       <span>Last name: </span>
       <input name="lastname" type="text"/>
       <span>First name: </span>
-      <div class='combobox'></div>
+      <span class='combobox'></span>
       <span class="selectedValue">
         <span>Selected index: </span>
         <span class="index"></span>
@@ -162,6 +227,43 @@
   </div>
 
 </div>
+
+
+<h2>Multiple combobox</h2>
+<hr/>
+
+<div class="panel m1">
+  <div class="controls">
+    {type: 'multi', items: ['Alex', 'Guy', 'Jacob', 'Paul', 'Elina', 'Daniel', 'Roman']}
+  </div>
+  <div>
+    <span>Last name: </span>
+    <input name="lastname" type="text"/>
+    <span>First name: </span>
+    <span class='combobox'></span>
+    <span class='onchange'></span>
+  </div>
+</div>
+
+<div style="direction: rtl;">
+  <h3>RTL</h3>
+
+
+<div class="panel m101">
+  <div class="controls">
+    {type: 'multi', items: ['Alex', 'Guy', 'Jacob', 'Paul', 'Elina', 'Daniel', 'Roman']}
+  </div>
+  <div>
+    <span>Last name: </span>
+    <input name="lastname" type="text"/>
+    <span>First name: </span>
+    <span class='combobox'></span>
+    <span class='onchange'></span>
+  </div>
+</div>
+</div>
+
+
 
 </body>
 </html>

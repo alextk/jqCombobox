@@ -14,7 +14,7 @@ div.combobox-container {
     background: transparent url(images/down-15x8.gif) no-repeat right center; }
   div.combobox-container div.popup {
     position: absolute;
-    background-color: #efefef;
+    background-color: white;
     border: 1px solid #aaaaaa;
     z-index: 1099; }
     div.combobox-container div.popup ul.items {

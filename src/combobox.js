@@ -153,7 +153,7 @@
 
   ComboboxClass.defaults = {
     empty: true,
-    emptyItem: {text: 'Please select value', value: null},
+    emptyItem: {text: 'Please select value', value: null}
   };
 
   $.fn.combobox.classes.Combobox = ComboboxClass;

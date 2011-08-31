@@ -2,14 +2,14 @@
 * jqCombobox - jQuery plugin for creating styled select box (combobox)
 *
 * Version: 0.0.1
-* Build: 15
+* Build: 16
 * Copyright 2011 Alex Tkachev
 *
 * Dual licensed under MIT or GPLv2 licenses
 *   http://en.wikipedia.org/wiki/MIT_License
 *   http://en.wikipedia.org/wiki/GNU_General_Public_License
 *
-* Date: 01/08/2011 19:28:01
+* Date: 31/08/2011 13:37:59
 */
 
 (function($) {
@@ -201,7 +201,7 @@
 
   ComboboxClass.defaults = {
     empty: true,
-    emptyItem: {text: 'Please select value', value: null},
+    emptyItem: {text: 'Please select value', value: null}
   };
 
   $.fn.combobox.classes.Combobox = ComboboxClass;

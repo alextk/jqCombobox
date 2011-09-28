@@ -2,14 +2,14 @@
 * jqCombobox - jQuery plugin for creating styled select box (combobox)
 *
 * Version: 0.0.1
-* Build: 16
+* Build: 17
 * Copyright 2011 Alex Tkachev
 *
 * Dual licensed under MIT or GPLv2 licenses
 *   http://en.wikipedia.org/wiki/MIT_License
 *   http://en.wikipedia.org/wiki/GNU_General_Public_License
 *
-* Date: 31/08/2011 13:37:59
+* Date: 28/09/2011 11:20:50
 */
 
 (function($) {
@@ -107,11 +107,13 @@
       popup.position(this.options.position); //position the popup relative to button
       popup.width(this.el.width()); //adjust width of popup to match that of combobox
       $(document).bind('mousedown', {combobox: this}, this._onDocumntMouseDown);
+      this._invokeCallback('show', {source: this});
     },
 
     hidePopup: function(){
       $(document).unbind('mousedown', this._onDocumntMouseDown);
       $('div.popup', this.el).hide();
+      this._invokeCallback('hide', {source: this});
     },
 
     renderItems: function(){
@@ -194,6 +196,9 @@
       var callback = this.options.events[callbackName];
       if ($.isFunction(callback)){
         callback.apply(this.options.events.context || this, Array.prototype.slice.call(arguments, 1));
+      }
+      if($.isFunction(this.options.events.callback)){
+        this.options.events.callback.apply(this.options.events.context || this, Array.prototype.slice.call(arguments, 1));
       }
     }
 

@@ -73,6 +73,12 @@
         });
       });
 
+      $('div.panel.events span.combobox').combobox({items: [{text: "alex"}, {text: 'guy', value: 'shumely'}, {text: 'Paul'}], events: {
+        change: function(){ $('div.eventLog').append($('<div/>').html('change event')) },
+        show: function(){ $('div.eventLog').append($('<div/>').html('show event')) },
+        hide: function(){ $('div.eventLog').append($('<div/>').html('hide event')) }
+      }});
+
       $('div.panel.m1, div.panel.m101').each(function(){
         var $this = $(this);
         $('span.combobox', $this).combobox({
@@ -186,6 +192,17 @@
     <span class='combobox'></span>
     <span class='onchange'></span>
   </div>
+</div>
+
+<div class="panel events">
+  <div class="controls">
+    events will be printed below
+  </div>
+  <div>
+    <span>Combobox of names: </span>
+    <span class='combobox'></span>
+  </div>
+  <div class="eventLog"></div>
 </div>
 
 <div style="direction: rtl;">

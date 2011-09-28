@@ -59,11 +59,13 @@
       popup.position(this.options.position); //position the popup relative to button
       popup.width(this.el.width()); //adjust width of popup to match that of combobox
       $(document).bind('mousedown', {combobox: this}, this._onDocumntMouseDown);
+      this._invokeCallback('show', {source: this});
     },
 
     hidePopup: function(){
       $(document).unbind('mousedown', this._onDocumntMouseDown);
       $('div.popup', this.el).hide();
+      this._invokeCallback('hide', {source: this});
     },
 
     renderItems: function(){
@@ -146,6 +148,9 @@
       var callback = this.options.events[callbackName];
       if ($.isFunction(callback)){
         callback.apply(this.options.events.context || this, Array.prototype.slice.call(arguments, 1));
+      }
+      if($.isFunction(this.options.events.callback)){
+        this.options.events.callback.apply(this.options.events.context || this, Array.prototype.slice.call(arguments, 1));
       }
     }
 

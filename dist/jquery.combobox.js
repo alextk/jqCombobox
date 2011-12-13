@@ -2,14 +2,14 @@
 * jqCombobox - jQuery plugin for creating styled select box (combobox)
 *
 * Version: 0.0.1
-* Build: 17
+* Build: 19
 * Copyright 2011 Alex Tkachev
 *
 * Dual licensed under MIT or GPLv2 licenses
 *   http://en.wikipedia.org/wiki/MIT_License
 *   http://en.wikipedia.org/wiki/GNU_General_Public_License
 *
-* Date: 28/09/2011 11:20:50
+* Date: 13 Dec 2011 21:24:32
 */
 
 (function($) {
@@ -46,7 +46,8 @@
     events: {}
   };
 
-})(jQuery);(function($) {
+})(jQuery);
+(function($) {
 
   /**
    * Progress bar class api
@@ -211,7 +212,8 @@
 
   $.fn.combobox.classes.Combobox = ComboboxClass;
 
-})(jQuery);(function($) {
+})(jQuery);
+(function($) {
 
   var SingleSelectionModelClass = function() {
     this.initialize.apply(this, arguments);
@@ -244,7 +246,8 @@
 
   $.fn.combobox.classes.SingleSelectionModel = SingleSelectionModelClass;
 
-})(jQuery);(function($) {
+})(jQuery);
+(function($) {
 
   /**
    * Progress bar class api
@@ -400,7 +403,8 @@
 
   $.fn.combobox.classes.MultipleCombobox = MultipleComboboxClass;
 
-})(jQuery);(function($) {
+})(jQuery);
+(function($) {
 
   var MultipleSelectionModelClass = function() {
     this.initialize.apply(this, arguments);

@@ -39,6 +39,16 @@
         }
       }});
 
+      var arr_200 = [];
+      for(var i=0; i<200; i++) arr_200.push({text: 'Item ' + i, value: i});
+      $('div.panel.c22 span.combobox, div.panel.c1022 span.combobox').combobox({items: arr_200, events: {change:
+        function(){
+          var panel = this.el.closest('div.panel');
+          $('span.selectedValue span.index', panel).html(this.selectedIndex());
+          $('span.selectedValue span.value', panel).html(this.selectedValue());
+        }
+      }});
+
       $('div.panel.c3 span.combobox, div.panel.c103 span.combobox').combobox({items: [{text: "alex"}, {text: 'guy', value: 'shumely'}, {text: 'Paul'}], events: {change:
         function(){
           var panel = this.el.closest('div.panel');
@@ -153,6 +163,24 @@
   </div>
 </div>
 
+<div class="panel c22">
+  <div class="controls">
+    empty: true, items: [200 items]
+  </div>
+  <div>
+    <span>Last name: </span>
+    <input name="lastname" type="text"/>
+    <span>First name: </span>
+    <span class='combobox'></span>
+    <span class="selectedValue">
+      <span>Selected index: </span>
+      <span class="index"></span>
+      <span>Selected value: </span>
+      <span class="value"></span>
+    </span>
+  </div>
+</div>
+
 <div class="panel c3">
   <div class="controls">
     height: 40px from CSS. {empty: true, items: [{text: "alex"}, {text: 'guy', value: 'shumely'}, {text: 'Paul'}]}
@@ -228,6 +256,24 @@
   <div class="panel c102">
     <div class="controls">
       empty: true, items: [{text: "alex"}, {text: 'guy', value: 'shumely'}, {text: 'Paul'}]
+    </div>
+    <div>
+      <span>Last name: </span>
+      <input name="lastname" type="text"/>
+      <span>First name: </span>
+      <span class='combobox'></span>
+      <span class="selectedValue">
+        <span>Selected index: </span>
+        <span class="index"></span>
+        <span>Selected value: </span>
+        <span class="value"></span>
+      </span>
+    </div>
+  </div>
+
+  <div class="panel c1022">
+    <div class="controls">
+      empty: true, items: [200 items*]
     </div>
     <div>
       <span>Last name: </span>

@@ -16,7 +16,8 @@ div.combobox-container {
     position: absolute;
     background-color: white;
     border: 1px solid #aaaaaa;
-    z-index: 1099; }
+    z-index: 1099;
+    overflow-y: auto; }
     div.combobox-container div.popup ul.items {
       margin: 0px;
       padding: 0px; }

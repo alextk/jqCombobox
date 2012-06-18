@@ -17,7 +17,8 @@
           } else if(type == 'multi'){
             clazz = $.fn.combobox.classes.MultipleCombobox;
           } else throw 'Unknown combobox type ' + type;
-          $this.data('api', new clazz($this, $.extend(true, {}, $.fn.combobox.defaults, clazz.defaults || {}, options, {rtl: $this.css('direction') == 'rtl'})));
+          var id = new Date().getTime().toString() + Math.floor(Math.random()*100003);
+          $this.data('api', new clazz($this, $.extend(true, {id: id}, $.fn.combobox.defaults, clazz.defaults || {}, options, {rtl: $this.css('direction') == 'rtl'})));
         }
       });
     }
@@ -27,6 +28,7 @@
 
   $.fn.combobox.defaults = {
     type: 'single',
+    maxHeight: 200,
     items: [],
     position: {my: 'left top', at: 'left bottom', offset: "-1 0"},
     events: {}

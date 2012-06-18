@@ -46,20 +46,56 @@
       if(index >=0) return this.items[index].value;
     },
 
+    popup: function(){
+      return $('div.popup', this.el);
+    },
+
     togglePopup: function(show){
-      var popup = $('div.popup', this.el);
+      var popup = this.popup();
       if(!$.isBoolean(show)) show = !popup.is(":visible");
 
       show ? this.showPopup() : this.hidePopup();
     },
 
     showPopup: function(){
-      var popup = $('div.popup', this.el);
+      var popup = this.popup();
       popup.show();
+      this.adjustPopupSize();
       popup.position(this.options.position); //position the popup relative to button
-      popup.width(this.el.width()); //adjust width of popup to match that of combobox
+      this.scrollToSelectedItem();
       $(document).bind('mousedown', {combobox: this}, this._onDocumntMouseDown);
       this._invokeCallback('show', {source: this});
+    },
+
+    adjustPopupSize: function(){
+      var popup = this.popup();
+      //set height
+      var itemsHeight = popup.find('ul li').map(function(){ return jQuery(this).outerHeight() }).get().sum();
+      if(itemsHeight > this.options.maxHeight){ //enforce max height
+        popup.height(this.options.maxHeight);
+      } else if(itemsHeight < popup.height()){ //reduce size
+        popup.height(itemsHeight);
+      } else if(itemsHeight > popup.height()){ //increase size
+        popup.height(itemsHeight);
+      }
+
+      popup.width('auto'); //reset layer width, so items can grow as much they need to and their width can be calculated
+      var itemsMaxWidth = popup.find('ul li').map(function(){ return jQuery(this).outerWidth() }).get().max();
+      //set width to be at least as width of the menu buttons
+      var elRelativeToWidth = this.el.outerWidth();
+      if(itemsMaxWidth < elRelativeToWidth){
+        popup.width(elRelativeToWidth-2);
+      }
+    },
+
+    scrollToSelectedItem: function(){
+      var popup = this.popup();
+      var viewPortHeight = popup.height();
+      var selectedIndex = this.selectedIndex();
+      var li = popup.find('li:eq({0})'.format(selectedIndex));
+      var newScrollTop = li.position().top - Math.floor(viewPortHeight/2);
+      if(newScrollTop < 0) newScrollTop = 0;
+      popup.scrollTop(newScrollTop);
     },
 
     hidePopup: function(){
@@ -87,8 +123,9 @@
     },
 
     _onDocumntMouseDown: function(event) {
+      var self = event.data.combobox;
       var target = $(event.target);
-      if (target.closest('div.combobox-container').length === 0) {
+      if (target.closest('div.combobox-container[data-id={0}]'.format(self.options.id)).length === 0) {
         event.data.combobox.hidePopup();
       }
     },
@@ -122,7 +159,7 @@
 
     _createUI: function(target, options) {
       var el = $(
-        '<div class="combobox-container">' +
+        '<div class="combobox-container" data-id="'+options.id+'">' +
           '<div class="value"/>' +
           '<input type="hidden"/>' +
           '<div class="popup" style="display: none"/>' +

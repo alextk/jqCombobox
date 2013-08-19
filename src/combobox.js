@@ -29,7 +29,7 @@
       //find selected item index
       var selectedIndex = -1;
       if(!$.isUndefined(options.selectedValue)) {
-        selectedIndex = this.items.findIndex(function(item){ return item.value == options.selectedValue; });
+        selectedIndex = this.items.index(function(item){ return item.value == options.selectedValue; });
       }
       if(selectedIndex == -1) selectedIndex = 0;
       this.selectionModel.index(selectedIndex);

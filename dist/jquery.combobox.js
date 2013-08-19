@@ -2,14 +2,14 @@
 * jqCombobox - jQuery plugin for creating styled select box (combobox)
 *
 * Version: 0.0.2
-* Build: 22
+* Build: 23
 * Copyright 2011 Alex Tkachev
 *
 * Dual licensed under MIT or GPLv2 licenses
 *   http://en.wikipedia.org/wiki/MIT_License
 *   http://en.wikipedia.org/wiki/GNU_General_Public_License
 *
-* Date: 18 Jun 2012 21:25:59
+* Date: 19 Aug 2013 17:08:26
 */
 
 (function($) {
@@ -80,7 +80,7 @@
       //find selected item index
       var selectedIndex = -1;
       if(!$.isUndefined(options.selectedValue)) {
-        selectedIndex = this.items.findIndex(function(item){ return item.value == options.selectedValue; });
+        selectedIndex = this.items.index(function(item){ return item.value == options.selectedValue; });
       }
       if(selectedIndex == -1) selectedIndex = 0;
       this.selectionModel.index(selectedIndex);
